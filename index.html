@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alien Biology Builder</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="space-background">
+        <div class="nebula"></div>
+        <div class="stars"></div>
+        <div class="planet planet-1"></div>
+        <div class="planet planet-2"></div>
+        <div class="planet planet-3"></div>
+        <div class="particles"></div>
+        
+        <div class="app-container">
+            <header class="game-header">
+                <h1>🪐 Alien Biology Builder</h1>
+                <p class="subtitle">Design an alien and test if it can survive!</p>
+            </header>
+
+            <!-- Screen 1: Welcome -->
+            <section id="welcome-screen" class="screen active">
+                <div class="screen-content">
+                    <div class="alien-icon">👽</div>
+                    <h2>Welcome, Scientist!</h2>
+                    <p class="instruction">
+                        In this simulation, you will create your own alien organism 
+                        and test if it can survive in different space environments.
+                    </p>
+                    <p class="instruction">
+                        Choose wisely – the wrong traits could mean extinction!
+                    </p>
+                    <button class="btn-primary" onclick="goToScreen('environment-screen')">
+                        🚀 Start Mission
+                    </button>
+                </div>
+            </section>
+
+            <!-- Screen 2: Environment Selection -->
+            <section id="environment-screen" class="screen">
+                <div class="screen-content">
+                    <h2>🌍 Choose Environment</h2>
+                    <p class="instruction">Select the conditions your alien will face:</p>
+                    
+                    <div class="option-group">
+                        <label>🌡️ Temperature</label>
+                        <div class="options-grid">
+                            <button class="option-btn" data-group="temperature" data-value="cold" onclick="selectOption('temperature', 'cold')">
+                                ❄️ Cold
+                            </button>
+                            <button class="option-btn" data-group="temperature" data-value="moderate" onclick="selectOption('temperature', 'moderate')">
+                                🌤️ Moderate
+                            </button>
+                            <button class="option-btn" data-group="temperature" data-value="extreme" onclick="selectOption('temperature', 'extreme')">
+                                🔥 Extreme Heat
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="option-group">
+                        <label>💨 Atmosphere</label>
+                        <div class="options-grid">
+                            <button class="option-btn" data-group="atmosphere" data-value="oxygen" onclick="selectOption('atmosphere', 'oxygen')">
+                                🫁 Oxygen
+                            </button>
+                            <button class="option-btn" data-group="atmosphere" data-value="no-oxygen" onclick="selectOption('atmosphere', 'no-oxygen')">
+                                🌑 No Oxygen
+                            </button>
+                            <button class="option-btn" data-group="atmosphere" data-value="toxic" onclick="selectOption('atmosphere', 'toxic')">
+                                ☠️ Toxic Gas
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="option-group">
+                        <label>☢️ Radiation Level</label>
+                        <div class="options-grid">
+                            <button class="option-btn" data-group="radiation" data-value="low" onclick="selectOption('radiation', 'low')">
+                                🟢 Low
+                            </button>
+                            <button class="option-btn" data-group="radiation" data-value="medium" onclick="selectOption('radiation', 'medium')">
+                                🟡 Medium
+                            </button>
+                            <button class="option-btn" data-group="radiation" data-value="high" onclick="selectOption('radiation', 'high')">
+                                🔴 High
+                            </button>
+                        </div>
+                    </div>
+
+                    <button class="btn-primary" onclick="goToScreen('builder-screen')">
+                        Next ➡️
+                    </button>
+                </div>
+            </section>
+
+            <!-- Screen 3: Organism Builder -->
+            <section id="builder-screen" class="screen">
+                <div class="screen-content">
+                    <h2>🧬 Build Your Alien</h2>
+                    <p class="instruction">Design an organism that can survive:</p>
+                    
+                    <!-- Alien Preview -->
+                    <div class="alien-preview">
+                        <div class="alien-morph">👽</div>
+                        <p style="color: #aaf; margin-top: 10px;">Your evolving alien...</p>
+                    </div>
+
+                    <div class="option-group">
+                        <label>🔬 Cell Type</label>
+                        <div class="options-grid">
+                            <button class="option-btn" data-group="cellType" data-value="simple" onclick="selectOption('cellType', 'simple')">
+                                🟢 Simple Cell
+                            </button>
+                            <button class="option-btn" data-group="cellType" data-value="complex" onclick="selectOption('cellType', 'complex')">
+                                🔵 Complex Cell
+                            </button>
+                            <button class="option-btn" data-group="cellType" data-value="unknown" onclick="selectOption('cellType', 'unknown')">
+                                🟣 Unknown Cell
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="option-group">
+                        <label>⚡ Energy Source</label>
+                        <div class="options-grid">
+                            <button class="option-btn" data-group="energy" data-value="light" onclick="selectOption('energy', 'light')">
+                                ☀️ Light (Photosynthesis)
+                            </button>
+                            <button class="option-btn" data-group="energy" data-value="chemicals" onclick="selectOption('energy', 'chemicals')">
+                                🧪 Chemicals (Chemosynthesis)
+                            </button>
+                            <button class="option-btn" data-group="energy" data-value="heat" onclick="selectOption('energy', 'heat')">
+                                🔥 Heat (Thermal)
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="option-group">
+                        <label>🛡️ Body Structure</label>
+                        <div class="options-grid">
+                            <button class="option-btn" data-group="structure" data-value="soft" onclick="selectOption('structure', 'soft')">
+                                🫧 Soft Body
+                            </button>
+                            <button class="option-btn" data-group="structure" data-value="hard" onclick="selectOption('structure', 'hard')">
+                                🪨 Hard Shell
+                            </button>
+                            <button class="option-btn" data-group="structure" data-value="membrane" onclick="selectOption('structure', 'membrane')">
+                                🧬 Thick Membrane
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="option-group">
+                        <label>⭐ Special Trait (Choose One)</label>
+                        <div class="options-grid">
+                            <button class="option-btn" data-group="trait" data-value="radiation" onclick="selectOption('trait', 'radiation')">
+                                ☢️ Radiation Resistance
+                            </button>
+                            <button class="option-btn" data-group="trait" data-value="growth" onclick="selectOption('trait', 'growth')">
+                                📈 Fast Growth
+                            </button>
+                            <button class="option-btn" data-group="trait" data-value="thick-membrane" onclick="selectOption('trait', 'thick-membrane')">
+                                🛡️ Extra Thick Membrane
+                            </button>
+                            <button class="option-btn" data-group="trait" data-value="heat" onclick="selectOption('trait', 'heat')">
+                                🔥 Heat Resistance
+                            </button>
+                        </div>
+                    </div>
+
+                    <button class="btn-primary" onclick="runSimulation()">
+                        🔬 Simulate
+                    </button>
+                </div>
+            </section>
+
+            <!-- Screen 4: Results -->
+            <section id="results-screen" class="screen">
+                <div class="screen-content">
+                    <h2>📊 Simulation Results</h2>
+                    
+                    <div class="result-display">
+                        <div id="survival-status" class="survival-status"></div>
+                        
+                        <!-- Score Meter -->
+                        <div class="score-container">
+                            <div class="score-meter-wrapper">
+                                <div class="score-meter-bg">
+                                    <div id="score-meter-fill" class="score-meter-fill"></div>
+                                </div>
+                            </div>
+                            <div id="score-number" class="score-number"></div>
+                            <div id="score-explanation" class="score-explanation"></div>
+                        </div>
+                    </div>
+
+                    <div class="explanation-box">
+                        <h3>📝 Analysis</h3>
+                        <p id="explanation-text"></p>
+                    </div>
+
+                    <div class="tips-box">
+                        <h3>💡 Learning Tips</h3>
+                        <ul id="tips-list"></ul>
+                    </div>
+
+                    <div class="your-alien">
+                        <h3>👽 Your Alien</h3>
+                        <div id="alien-summary"></div>
+                    </div>
+
+                    <button class="btn-primary" onclick="goToScreen('welcome-screen'); resetGame();">
+                        🔄 Try Again
+                    </button>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
