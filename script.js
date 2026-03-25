@@ -444,23 +444,7 @@ function resetGame() {
     }
 }
 
-// ===== Create Floating Particles =====
-function createParticles() {
-    const particlesContainer = document.querySelector('.particles');
-    if (!particlesContainer) return;
-    
-    for (let i = 0; i < 20; i++) {
-        const particle = document.createElement('div');
-        particle.className = 'particle';
-        particle.style.left = Math.random() * 100 + '%';
-        particle.style.animationDelay = Math.random() * 10 + 's';
-        particle.style.animationDuration = (10 + Math.random() * 10) + 's';
-        particlesContainer.appendChild(particle);
-    }
-}
-
 // ===== Initialize =====
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('🪐 Alien Biology Builder loaded!');
-    createParticles();
+    console.log('🪐 Alien Simulator loaded!');
 });
