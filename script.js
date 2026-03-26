@@ -58,15 +58,18 @@ function goToScreen(screenId) {
     document.querySelectorAll('.screen').forEach(screen => {
         screen.classList.remove('active');
     });
-    
+
     // Show target screen
-    document.getElementById(screenId).classList.add('active');
-    
+    const targetScreen = document.getElementById(screenId);
+    if (targetScreen) {
+        targetScreen.classList.add('active');
+    }
+
     // Update alien preview on builder screen
     if (screenId === 'builder-screen') {
         updateAlienPreview();
     }
-    
+
     // Scroll to top
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
@@ -74,15 +77,17 @@ function goToScreen(screenId) {
 // ===== Selection Handling =====
 function selectOption(group, value) {
     selections[group] = value;
-    
+
     // Update button styles
     document.querySelectorAll(`[data-group="${group}"]`).forEach(btn => {
         btn.classList.remove('selected');
     });
-    
-    document.querySelector(`[data-group="${group}"][data-value="${value}"]`)
-        .classList.add('selected');
-    
+
+    const selectedBtn = document.querySelector(`[data-group="${group}"][data-value="${value}"]`);
+    if (selectedBtn) {
+        selectedBtn.classList.add('selected');
+    }
+
     // Update alien preview if on builder screen
     if (group !== 'temperature' && group !== 'atmosphere' && group !== 'radiation') {
         updateAlienPreview();
@@ -93,15 +98,15 @@ function selectOption(group, value) {
 function updateAlienPreview() {
     const previewContainer = document.querySelector('.alien-preview');
     if (!previewContainer) return;
-    
+
     // Pick alien emoji based on selections
     let alienIndex = 0;
     if (selections.cellType === 'complex') alienIndex = 1;
     if (selections.structure === 'hard') alienIndex = 2;
     if (selections.trait === 'radiation') alienIndex = 4;
-    
+
     const alienEmoji = alienEmojis[alienIndex % alienEmojis.length];
-    
+
     previewContainer.innerHTML = `
         <div class="alien-morph">${alienEmoji}</div>
         <p style="color: #aaf; margin-top: 10px;">Your evolving alien...</p>
@@ -112,25 +117,30 @@ function updateAlienPreview() {
 function runSimulation() {
     // Check if all selections are made
     const allSelected = Object.values(selections).every(val => val !== null);
-    
+
     if (!allSelected) {
         alert("🚨 Please select options in all categories before simulating!");
         return;
     }
-    
-    // Calculate survival
-    const result = calculateSurvival();
-    
-    // Display results
-    displayResults(result);
-    
-    // Go to results screen
-    goToScreen('results-screen');
-    
-    // Animate score meter after a short delay
-    setTimeout(() => {
-        animateScoreMeter(result.score);
-    }, 300);
+
+    try {
+        // Calculate survival
+        const result = calculateSurvival();
+
+        // Display results
+        displayResults(result);
+
+        // Go to results screen
+        goToScreen('results-screen');
+
+        // Animate score meter after a short delay
+        setTimeout(() => {
+            animateScoreMeter(result.score);
+        }, 300);
+    } catch (error) {
+        console.error('Simulation error:', error);
+        alert("⚠️ An error occurred during simulation. Please try again.");
+    }
 }
 
 function calculateSurvival() {
@@ -356,47 +366,63 @@ function generateScoreExplanation(score, status) {
 }
 
 function displayResults(result) {
-    // Set survival status
-    const statusEl = document.getElementById('survival-status');
-    statusEl.className = 'survival-status ' + result.status;
-    
-    if (result.status === 'survives') {
-        statusEl.innerHTML = '✅ SURVIVES';
-    } else if (result.status === 'struggles') {
-        statusEl.innerHTML = '⚠️ STRUGGLES';
-    } else {
-        statusEl.innerHTML = '❌ DIES';
+    try {
+        // Set survival status
+        const statusEl = document.getElementById('survival-status');
+        if (statusEl) {
+            statusEl.className = 'survival-status ' + result.status;
+
+            if (result.status === 'survives') {
+                statusEl.innerHTML = '✅ SURVIVES';
+            } else if (result.status === 'struggles') {
+                statusEl.innerHTML = '⚠️ STRUGGLES';
+            } else {
+                statusEl.innerHTML = '❌ DIES';
+            }
+        }
+
+        // Set score number with color class
+        const scoreNumberEl = document.getElementById('score-number');
+        if (scoreNumberEl) {
+            scoreNumberEl.className = 'score-number ' + getScoreClass(result.score);
+            scoreNumberEl.textContent = result.score + ' / 10';
+        }
+
+        // Set score explanation
+        const scoreExplanationEl = document.getElementById('score-explanation');
+        if (scoreExplanationEl) {
+            scoreExplanationEl.className = 'score-explanation ' + getScoreClass(result.score);
+            scoreExplanationEl.textContent = `Score ${result.score}/10 → ${result.scoreExplanation}`;
+        }
+
+        // Set explanation
+        const explanationEl = document.getElementById('explanation-text');
+        if (explanationEl) {
+            explanationEl.innerHTML = result.explanations.join('<br><br>');
+        }
+
+        // Set tips
+        const tipsList = document.getElementById('tips-list');
+        if (tipsList) {
+            tipsList.innerHTML = result.tips.map(tip => `<li>${tip}</li>`).join('');
+        }
+
+        // Set alien summary
+        const alienSummary = document.getElementById('alien-summary');
+        if (alienSummary) {
+            alienSummary.innerHTML = `
+                <div class="alien-trait"><span>Environment:</span> ${displayNames.temperature[selections.temperature]}</div>
+                <div class="alien-trait"><span>Atmosphere:</span> ${displayNames.atmosphere[selections.atmosphere]}</div>
+                <div class="alien-trait"><span>Radiation:</span> ${displayNames.radiation[selections.radiation]}</div>
+                <div class="alien-trait"><span>Cell Type:</span> ${displayNames.cellType[selections.cellType]}</div>
+                <div class="alien-trait"><span>Energy:</span> ${displayNames.energy[selections.energy]}</div>
+                <div class="alien-trait"><span>Structure:</span> ${displayNames.structure[selections.structure]}</div>
+                <div class="alien-trait"><span>Trait:</span> ${displayNames.trait[selections.trait]}</div>
+            `;
+        }
+    } catch (error) {
+        console.error('Display results error:', error);
     }
-    
-    // Set score number with color class
-    const scoreNumberEl = document.getElementById('score-number');
-    scoreNumberEl.className = 'score-number ' + getScoreClass(result.score);
-    scoreNumberEl.textContent = result.score + ' / 10';
-    
-    // Set score explanation
-    const scoreExplanationEl = document.getElementById('score-explanation');
-    scoreExplanationEl.className = 'score-explanation ' + getScoreClass(result.score);
-    scoreExplanationEl.textContent = `Score ${result.score}/10 → ${result.scoreExplanation}`;
-    
-    // Set explanation
-    const explanationEl = document.getElementById('explanation-text');
-    explanationEl.innerHTML = result.explanations.join('<br><br>');
-    
-    // Set tips
-    const tipsList = document.getElementById('tips-list');
-    tipsList.innerHTML = result.tips.map(tip => `<li>${tip}</li>`).join('');
-    
-    // Set alien summary
-    const alienSummary = document.getElementById('alien-summary');
-    alienSummary.innerHTML = `
-        <div class="alien-trait"><span>Environment:</span> ${displayNames.temperature[selections.temperature]}</div>
-        <div class="alien-trait"><span>Atmosphere:</span> ${displayNames.atmosphere[selections.atmosphere]}</div>
-        <div class="alien-trait"><span>Radiation:</span> ${displayNames.radiation[selections.radiation]}</div>
-        <div class="alien-trait"><span>Cell Type:</span> ${displayNames.cellType[selections.cellType]}</div>
-        <div class="alien-trait"><span>Energy:</span> ${displayNames.energy[selections.energy]}</div>
-        <div class="alien-trait"><span>Structure:</span> ${displayNames.structure[selections.structure]}</div>
-        <div class="alien-trait"><span>Trait:</span> ${displayNames.trait[selections.trait]}</div>
-    `;
 }
 
 function getScoreClass(score) {
@@ -407,12 +433,14 @@ function getScoreClass(score) {
 
 function animateScoreMeter(score) {
     const meterFill = document.getElementById('score-meter-fill');
+    if (!meterFill) return;
+
     const percentage = (score / 10) * 100;
-    
+
     // Reset and animate
     meterFill.style.width = '0%';
-    meterFill.className = 'score-meter-fill'; // Reset class
-    
+    meterFill.className = 'score-meter-fill';
+
     setTimeout(() => {
         meterFill.style.width = percentage + '%';
         meterFill.classList.add(getScoreClass(score));
@@ -430,12 +458,12 @@ function resetGame() {
         structure: null,
         trait: null
     };
-    
+
     // Clear button selections
     document.querySelectorAll('.option-btn').forEach(btn => {
         btn.classList.remove('selected');
     });
-    
+
     // Reset score meter
     const meterFill = document.getElementById('score-meter-fill');
     if (meterFill) {

@@ -18,7 +18,7 @@ body {
     position: relative;
 }
 
-/* Simplified Stars */
+/* Simplified Stars - No animation to prevent GPU strain */
 .stars {
     position: fixed;
     top: 0;
@@ -26,17 +26,18 @@ body {
     width: 100%;
     height: 100%;
     pointer-events: none;
-    background-image: 
+    background-image:
         radial-gradient(1px 1px at 10px 10px, #fff, transparent),
         radial-gradient(1px 1px at 50px 80px, rgba(255,255,255,0.8), transparent),
         radial-gradient(1px 1px at 120px 40px, #fff, transparent),
         radial-gradient(1px 1px at 200px 150px, rgba(255,255,255,0.9), transparent),
         radial-gradient(1px 1px at 300px 100px, #fff, transparent);
     background-size: 350px 200px;
-    opacity: 0.5;
+    opacity: 0.4;
+    will-change: auto;
 }
 
-/* Simplified Nebula */
+/* Simplified Nebula - Static for performance */
 .nebula {
     position: fixed;
     top: 0;
@@ -44,18 +45,20 @@ body {
     width: 100%;
     height: 100%;
     pointer-events: none;
-    background: 
-        radial-gradient(ellipse at 30% 40%, rgba(138, 43, 226, 0.1) 0%, transparent 40%),
-        radial-gradient(ellipse at 70% 60%, rgba(75, 0, 130, 0.15) 0%, transparent 40%);
-    opacity: 0.5;
+    background:
+        radial-gradient(ellipse at 30% 40%, rgba(138, 43, 226, 0.08) 0%, transparent 40%),
+        radial-gradient(ellipse at 70% 60%, rgba(75, 0, 130, 0.1) 0%, transparent 40%);
+    opacity: 0.4;
+    will-change: auto;
 }
 
-/* Simplified Planets */
+/* Simplified Planets - No floating animation */
 .planet {
     position: fixed;
     border-radius: 50%;
     pointer-events: none;
-    opacity: 0.6;
+    opacity: 0.5;
+    will-change: auto;
 }
 
 .planet-1 {
@@ -64,7 +67,7 @@ body {
     background: linear-gradient(135deg, #ff6b6b, #c44569);
     top: 15%;
     right: 10%;
-    box-shadow: 0 0 20px rgba(255, 107, 107, 0.4);
+    box-shadow: 0 0 15px rgba(255, 107, 107, 0.3);
 }
 
 .planet-2 {
@@ -73,7 +76,7 @@ body {
     background: linear-gradient(135deg, #4ecdc4, #44a08d);
     top: 70%;
     left: 5%;
-    box-shadow: 0 0 15px rgba(78, 205, 196, 0.4);
+    box-shadow: 0 0 10px rgba(78, 205, 196, 0.3);
 }
 
 /* ===== App Container ===== */
@@ -89,17 +92,17 @@ body {
 .game-header {
     text-align: center;
     padding: 30px 20px;
-    background: linear-gradient(135deg, rgba(138, 43, 226, 0.3), rgba(75, 0, 130, 0.3));
+    background: linear-gradient(135deg, rgba(138, 43, 226, 0.25), rgba(75, 0, 130, 0.25));
     border-radius: 20px;
     margin-bottom: 25px;
-    border: 2px solid rgba(138, 43, 226, 0.5);
-    box-shadow: 0 0 25px rgba(138, 43, 226, 0.4);
+    border: 2px solid rgba(138, 43, 226, 0.4);
+    box-shadow: 0 0 15px rgba(138, 43, 226, 0.3);
 }
 
 .game-header h1 {
     font-size: 2.3rem;
     color: #7df;
-    text-shadow: 0 0 15px rgba(100, 200, 255, 0.6);
+    text-shadow: 0 0 10px rgba(100, 200, 255, 0.5);
     margin-bottom: 8px;
     letter-spacing: 2px;
 }
@@ -119,11 +122,11 @@ body {
 }
 
 .screen-content {
-    background: linear-gradient(135deg, rgba(30, 10, 60, 0.95), rgba(20, 10, 50, 0.95));
+    background: linear-gradient(135deg, rgba(30, 10, 60, 0.92), rgba(20, 10, 50, 0.92));
     border-radius: 20px;
     padding: 30px;
-    border: 2px solid rgba(138, 43, 226, 0.4);
-    box-shadow: 0 0 25px rgba(138, 43, 226, 0.3);
+    border: 2px solid rgba(138, 43, 226, 0.35);
+    box-shadow: 0 0 15px rgba(138, 43, 226, 0.25);
 }
 
 .screen-content h2 {
@@ -131,7 +134,7 @@ body {
     color: #7df;
     margin-bottom: 10px;
     font-size: 1.8rem;
-    text-shadow: 0 0 10px rgba(0, 245, 255, 0.4);
+    text-shadow: 0 0 8px rgba(0, 245, 255, 0.35);
 }
 
 .instruction {
@@ -141,12 +144,12 @@ body {
     line-height: 1.6;
 }
 
-/* ===== Alien Icon ===== */
+/* ===== Alien Icon - No animation ===== */
 .alien-icon {
     font-size: 5rem;
     text-align: center;
     margin-bottom: 20px;
-    filter: drop-shadow(0 0 15px rgba(0, 255, 136, 0.6));
+    filter: drop-shadow(0 0 10px rgba(0, 255, 136, 0.5));
 }
 
 /* ===== Option Groups ===== */
@@ -160,7 +163,7 @@ body {
     font-size: 1.1rem;
     margin-bottom: 12px;
     font-weight: bold;
-    text-shadow: 0 0 8px rgba(0, 245, 255, 0.4);
+    text-shadow: 0 0 6px rgba(0, 245, 255, 0.3);
 }
 
 .options-grid {
@@ -170,14 +173,14 @@ body {
 }
 
 .option-btn {
-    background: linear-gradient(135deg, rgba(50, 20, 100, 0.8), rgba(30, 10, 70, 0.9));
-    border: 2px solid rgba(138, 43, 226, 0.4);
+    background: linear-gradient(135deg, rgba(50, 20, 100, 0.75), rgba(30, 10, 70, 0.85));
+    border: 2px solid rgba(138, 43, 226, 0.35);
     border-radius: 12px;
     padding: 15px 10px;
     color: #fff;
     font-size: 0.95rem;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.15s ease;
     min-height: 70px;
     display: flex;
     align-items: center;
@@ -186,16 +189,16 @@ body {
 }
 
 .option-btn:hover {
-    background: linear-gradient(135deg, rgba(80, 40, 150, 0.9), rgba(60, 30, 120, 1));
-    border-color: rgba(0, 245, 255, 0.6);
+    background: linear-gradient(135deg, rgba(80, 40, 150, 0.85), rgba(60, 30, 120, 0.95));
+    border-color: rgba(0, 245, 255, 0.5);
     transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(138, 43, 226, 0.4);
+    box-shadow: 0 4px 12px rgba(138, 43, 226, 0.3);
 }
 
 .option-btn.selected {
-    background: linear-gradient(135deg, rgba(0, 245, 255, 0.8), rgba(0, 150, 200, 0.9));
-    border-color: rgba(0, 255, 255, 0.8);
-    box-shadow: 0 0 20px rgba(0, 245, 255, 0.6);
+    background: linear-gradient(135deg, rgba(0, 245, 255, 0.75), rgba(0, 150, 200, 0.85));
+    border-color: rgba(0, 255, 255, 0.7);
+    box-shadow: 0 0 15px rgba(0, 245, 255, 0.5);
 }
 
 /* ===== Buttons ===== */
@@ -206,14 +209,14 @@ body {
     margin: 30px auto 0;
     padding: 18px 40px;
     background: linear-gradient(135deg, #8a2be2, #4b0082);
-    border: 2px solid rgba(0, 245, 255, 0.5);
+    border: 2px solid rgba(0, 245, 255, 0.4);
     border-radius: 50px;
     color: #fff;
     font-size: 1.2rem;
     font-weight: bold;
     cursor: pointer;
-    transition: all 0.2s ease;
-    box-shadow: 0 5px 20px rgba(138, 43, 226, 0.5);
+    transition: all 0.15s ease;
+    box-shadow: 0 4px 15px rgba(138, 43, 226, 0.4);
     text-transform: uppercase;
     letter-spacing: 1px;
 }
@@ -221,10 +224,10 @@ body {
 .btn-primary:hover {
     background: linear-gradient(135deg, #9b3bf2, #5c1092);
     transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(138, 43, 226, 0.6);
+    box-shadow: 0 6px 18px rgba(138, 43, 226, 0.5);
 }
 
-/* ===== Alien Preview ===== */
+/* ===== Alien Preview - No animation ===== */
 .alien-preview {
     text-align: center;
     padding: 15px;
@@ -233,17 +236,17 @@ body {
 
 .alien-morph {
     font-size: 4rem;
-    filter: drop-shadow(0 0 15px rgba(0, 255, 136, 0.6));
+    filter: drop-shadow(0 0 10px rgba(0, 255, 136, 0.5));
 }
 
 /* ===== Results Screen ===== */
 .result-display {
     text-align: center;
     padding: 25px;
-    background: linear-gradient(135deg, rgba(50, 20, 100, 0.5), rgba(30, 10, 70, 0.7));
+    background: linear-gradient(135deg, rgba(50, 20, 100, 0.45), rgba(30, 10, 70, 0.6));
     border-radius: 15px;
     margin-bottom: 20px;
-    border: 2px solid rgba(138, 43, 226, 0.4);
+    border: 2px solid rgba(138, 43, 226, 0.35);
 }
 
 .survival-status {
@@ -258,32 +261,32 @@ body {
 
 .survival-status.survives {
     color: #4f4;
-    text-shadow: 0 0 15px rgba(100, 255, 100, 0.8);
-    background: rgba(50, 150, 50, 0.3);
-    border: 2px solid rgba(100, 255, 100, 0.5);
+    text-shadow: 0 0 12px rgba(100, 255, 100, 0.7);
+    background: rgba(50, 150, 50, 0.25);
+    border: 2px solid rgba(100, 255, 100, 0.45);
 }
 
 .survival-status.struggles {
     color: #ffdd44;
-    text-shadow: 0 0 15px rgba(255, 221, 68, 0.8);
-    background: rgba(150, 150, 50, 0.3);
-    border: 2px solid rgba(255, 221, 68, 0.5);
+    text-shadow: 0 0 12px rgba(255, 221, 68, 0.7);
+    background: rgba(150, 150, 50, 0.25);
+    border: 2px solid rgba(255, 221, 68, 0.45);
 }
 
 .survival-status.dies {
     color: #f66;
-    text-shadow: 0 0 15px rgba(255, 100, 100, 0.8);
-    background: rgba(150, 50, 50, 0.3);
-    border: 2px solid rgba(255, 100, 100, 0.5);
+    text-shadow: 0 0 12px rgba(255, 100, 100, 0.7);
+    background: rgba(150, 50, 50, 0.25);
+    border: 2px solid rgba(255, 100, 100, 0.45);
 }
 
 /* ===== Score Meter ===== */
 .score-container {
     margin-top: 20px;
     padding: 20px;
-    background: linear-gradient(135deg, rgba(30, 10, 60, 0.8), rgba(20, 10, 50, 0.9));
+    background: linear-gradient(135deg, rgba(30, 10, 60, 0.75), rgba(20, 10, 50, 0.85));
     border-radius: 12px;
-    border: 2px solid rgba(0, 245, 255, 0.3);
+    border: 2px solid rgba(0, 245, 255, 0.25);
 }
 
 .score-meter-wrapper {
@@ -295,34 +298,34 @@ body {
 
 .score-meter-bg {
     height: 30px;
-    background: linear-gradient(90deg, 
-        rgba(255, 68, 68, 0.3) 0%, 
-        rgba(255, 255, 0, 0.3) 50%, 
-        rgba(68, 255, 68, 0.3) 100%);
+    background: linear-gradient(90deg,
+        rgba(255, 68, 68, 0.25) 0%,
+        rgba(255, 255, 0, 0.25) 50%,
+        rgba(68, 255, 68, 0.25) 100%);
     border-radius: 15px;
-    border: 2px solid rgba(255, 255, 255, 0.2);
+    border: 2px solid rgba(255, 255, 255, 0.15);
     overflow: hidden;
 }
 
 .score-meter-fill {
     height: 100%;
     border-radius: 15px;
-    transition: width 1s ease-out;
+    transition: width 0.8s ease-out;
 }
 
 .score-meter-fill.low {
     background: linear-gradient(90deg, #ff4444, #ff6666);
-    box-shadow: 0 0 20px rgba(255, 68, 68, 0.6);
+    box-shadow: 0 0 12px rgba(255, 68, 68, 0.5);
 }
 
 .score-meter-fill.medium {
     background: linear-gradient(90deg, #ffdd44, #ffee66);
-    box-shadow: 0 0 20px rgba(255, 221, 68, 0.6);
+    box-shadow: 0 0 12px rgba(255, 221, 68, 0.5);
 }
 
 .score-meter-fill.high {
     background: linear-gradient(90deg, #44ff44, #66ff66);
-    box-shadow: 0 0 20px rgba(68, 255, 68, 0.6);
+    box-shadow: 0 0 12px rgba(68, 255, 68, 0.5);
 }
 
 .score-number {
@@ -334,17 +337,17 @@ body {
 
 .score-number.low {
     color: #ff6666;
-    text-shadow: 0 0 15px rgba(255, 100, 100, 0.6);
+    text-shadow: 0 0 12px rgba(255, 100, 100, 0.5);
 }
 
 .score-number.medium {
     color: #ffdd44;
-    text-shadow: 0 0 15px rgba(255, 221, 68, 0.6);
+    text-shadow: 0 0 12px rgba(255, 221, 68, 0.5);
 }
 
 .score-number.high {
     color: #66ff66;
-    text-shadow: 0 0 15px rgba(100, 255, 100, 0.6);
+    text-shadow: 0 0 12px rgba(100, 255, 100, 0.5);
 }
 
 .score-explanation {
@@ -358,31 +361,31 @@ body {
 
 .score-explanation.low {
     color: #ff8888;
-    background: rgba(255, 68, 68, 0.15);
-    border: 1px solid rgba(255, 68, 68, 0.3);
+    background: rgba(255, 68, 68, 0.12);
+    border: 1px solid rgba(255, 68, 68, 0.25);
 }
 
 .score-explanation.medium {
     color: #ffee88;
-    background: rgba(255, 221, 68, 0.15);
-    border: 1px solid rgba(255, 221, 68, 0.3);
+    background: rgba(255, 221, 68, 0.12);
+    border: 1px solid rgba(255, 221, 68, 0.25);
 }
 
 .score-explanation.high {
     color: #88ff88;
-    background: rgba(68, 255, 68, 0.15);
-    border: 1px solid rgba(68, 255, 68, 0.3);
+    background: rgba(68, 255, 68, 0.12);
+    border: 1px solid rgba(68, 255, 68, 0.25);
 }
 
 /* ===== Explanation & Tips Boxes ===== */
 .explanation-box,
 .tips-box,
 .your-alien {
-    background: linear-gradient(135deg, rgba(40, 20, 80, 0.7), rgba(25, 15, 60, 0.8));
+    background: linear-gradient(135deg, rgba(40, 20, 80, 0.65), rgba(25, 15, 60, 0.75));
     border-radius: 15px;
     padding: 18px;
     margin-bottom: 18px;
-    border: 2px solid rgba(138, 43, 226, 0.3);
+    border: 2px solid rgba(138, 43, 226, 0.25);
 }
 
 .explanation-box h3,
@@ -391,7 +394,7 @@ body {
     color: #7df;
     margin-bottom: 12px;
     font-size: 1.3rem;
-    text-shadow: 0 0 8px rgba(0, 245, 255, 0.4);
+    text-shadow: 0 0 6px rgba(0, 245, 255, 0.3);
 }
 
 .explanation-box p {
@@ -426,10 +429,10 @@ body {
 }
 
 .alien-trait {
-    background: linear-gradient(135deg, rgba(50, 30, 100, 0.5), rgba(30, 20, 70, 0.6));
+    background: linear-gradient(135deg, rgba(50, 30, 100, 0.45), rgba(30, 20, 70, 0.55));
     padding: 12px;
     border-radius: 8px;
-    border: 1px solid rgba(138, 43, 226, 0.3);
+    border: 1px solid rgba(138, 43, 226, 0.25);
     color: #b8f;
     font-size: 0.9rem;
 }
